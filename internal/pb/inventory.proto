@@ -1,0 +1,86 @@
+syntax= "proto3";
+
+package inventorysvc;
+
+
+option go_package = "./internal/pb";
+
+
+
+service InventoryService {
+    rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse){}
+    rpc ReadCategories(Empty) returns (ReadCategoriesResponse){}
+    rpc DeleteCategory (DeleteCategoryRequest) returns (DeleteCategoryResponse){}
+    rpc AddProduct (AddProductRequest) returns (AddProductResponse){}
+    rpc ReadProducts (Empty)returns (ReadProductsResponse){}
+}
+
+message Empty{}
+message CreateCategoryRequest {
+    string name = 1;
+}
+
+message CreateCategoryResponse {
+    int64 status =1;
+    string msg =2;
+    string error =3;
+}
+
+message CategoryData{
+string categoryID =1;
+string name =2;
+} 
+
+message ReadCategoriesResponse{
+int64 status =1;
+string msg =2;
+string error= 3;
+repeated CategoryData categories=4;
+}
+
+message DeleteCategoryRequest {
+    string categoryID = 1;
+}
+
+
+message DeleteCategoryResponse {
+    int64 status = 1;
+    string msg = 2;
+    string error = 3;
+}
+
+
+message AddProductRequest{         
+int64 categoryID =1; 
+string name  =2;
+string	description =3;
+repeated string Image =4;     
+int64 price = 5;
+bool isBlocked =6;
+}
+
+message AddProductResponse {
+ int64 status = 1;
+ string msg = 2;
+ string error = 3;
+}
+
+
+message Products{         
+int64 categoryID =1; 
+string name  =2;
+string	description =3;
+repeated string Image =4;     
+int64 price = 5;
+bool isBlocked =6;
+}
+
+
+
+
+message ReadProductsResponse{
+int64 status = 1;
+string msg = 2;
+string error = 3;
+repeated Products products=4;
+
