@@ -6,16 +6,20 @@ package inventorysvc;
 option go_package = "./internal/pb";
 
 
-
 service InventoryService {
     rpc CreateCategory(CreateCategoryRequest) returns (CreateCategoryResponse){}
-    rpc ReadCategories(Empty) returns (ReadCategoriesResponse){}
+    rpc ReadCategories(Request) returns (ReadCategoriesResponse){}
     rpc DeleteCategory (DeleteCategoryRequest) returns (DeleteCategoryResponse){}
     rpc AddProduct (AddProductRequest) returns (AddProductResponse){}
-    rpc ReadProducts (Empty)returns (ReadProductsResponse){}
+    rpc ReadProducts (Request)returns (ReadProductsResponse){}
 }
 
-message Empty{}
+message Request{
+    int64 page = 5;
+    int64 count = 6;
+
+}
+
 message CreateCategoryRequest {
     string name = 1;
 }
@@ -26,16 +30,17 @@ message CreateCategoryResponse {
     string error =3;
 }
 
-message CategoryData{
-string categoryID =1;
-string name =2;
+message Category{
+    string ID =1;
+    string name =2;
 } 
 
 message ReadCategoriesResponse{
-int64 status =1;
-string msg =2;
-string error= 3;
-repeated CategoryData categories=4;
+    int64 status =1;
+    string msg =2;
+    string error= 3;
+    repeated Category categories=4;
+    
 }
 
 message DeleteCategoryRequest {
@@ -51,36 +56,36 @@ message DeleteCategoryResponse {
 
 
 message AddProductRequest{         
-int64 categoryID =1; 
-string name  =2;
-string	description =3;
-repeated string Image =4;     
-int64 price = 5;
-bool isBlocked =6;
+    string categoryID =1; 
+    string name  =2;
+    string	description =3;
+    repeated string Image =4;     
+    int64 price = 5;
+    bool isBlocked =6;
 }
 
 message AddProductResponse {
- int64 status = 1;
- string msg = 2;
- string error = 3;
+    int64 status = 1;
+    string msg = 2;
+    string error = 3;
 }
 
 
-message Products{         
-int64 categoryID =1; 
-string name  =2;
-string	description =3;
-repeated string Image =4;     
-int64 price = 5;
-bool isBlocked =6;
+message Product{         
+    string id =1;
+    string  categoryID =2; 
+    string name  =3;
+    string brand  =5;
+    string	description =6;
+    repeated string image =7;     
+    int64 price = 8;
+    bool isBlocked =9;
 }
-
-
 
 
 message ReadProductsResponse{
-int64 status = 1;
-string msg = 2;
-string error = 3;
-repeated Products products=4;
-
+    int64 status = 1;
+    string msg = 2;
+    string error = 3;
+    repeated Product products=4;  
+}

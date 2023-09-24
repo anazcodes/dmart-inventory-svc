@@ -1,8 +1,8 @@
-pa kage main
-                          
+package main
+
 import (
 	"fmt"
-	"log"                                      
+	"log"
 	"net"
 
 	"github.com/anazibinurasheed/dmart-inventory-svc/internal/config"
@@ -30,6 +30,7 @@ func main() {
 	}
 
 	server := grpc.NewServer()
+
 	pb.RegisterInventoryServiceServer(server, service)
 
 	fmt.Println("service raising up ...")

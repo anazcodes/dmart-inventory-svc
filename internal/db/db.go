@@ -3,6 +3,7 @@ package db
 import (
 	"context"
 	"log"
+	"time"
 
 	"github.com/anazibinurasheed/dmart-inventory-svc/internal/util"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -11,9 +12,10 @@ import (
 
 func InitDB(dbUrl string) (*mongo.Database, error) {
 	clientOption := options.Client().ApplyURI(dbUrl)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
 
-	client, err := mongo.Connect(context.TODO(), clientOption)
-
+	client, err := mongo.Connect(ctx, clientOption)
 	if util.HasError(err) {
 		log.Fatalln("failed to connect with db")
 	}

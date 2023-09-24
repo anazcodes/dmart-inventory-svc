@@ -1,7 +1,6 @@
 package util
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -18,9 +17,8 @@ func Logger(any ...any) {
 }
 
 // Recover from panic and return error
-func Recover() error {
+func Recover() {
 	if err := recover(); err != nil {
-		return errors.New(fmt.Sprint(err))
+		Logger(err)
 	}
-	return nil
 }

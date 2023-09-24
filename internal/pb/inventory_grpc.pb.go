@@ -23,10 +23,10 @@ const _ = grpc.SupportPackageIsVersion7
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type InventoryServiceClient interface {
 	CreateCategory(ctx context.Context, in *CreateCategoryRequest, opts ...grpc.CallOption) (*CreateCategoryResponse, error)
-	ReadCategories(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ReadCategoriesResponse, error)
+	ReadCategories(ctx context.Context, in *Request, opts ...grpc.CallOption) (*ReadCategoriesResponse, error)
 	DeleteCategory(ctx context.Context, in *DeleteCategoryRequest, opts ...grpc.CallOption) (*DeleteCategoryResponse, error)
 	AddProduct(ctx context.Context, in *AddProductRequest, opts ...grpc.CallOption) (*AddProductResponse, error)
-	ReadProducts(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ReadProductsResponse, error)
+	ReadProducts(ctx context.Context, in *Request, opts ...grpc.CallOption) (*ReadProductsResponse, error)
 }
 
 type inventoryServiceClient struct {
@@ -46,7 +46,7 @@ func (c *inventoryServiceClient) CreateCategory(ctx context.Context, in *CreateC
 	return out, nil
 }
 
-func (c *inventoryServiceClient) ReadCategories(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ReadCategoriesResponse, error) {
+func (c *inventoryServiceClient) ReadCategories(ctx context.Context, in *Request, opts ...grpc.CallOption) (*ReadCategoriesResponse, error) {
 	out := new(ReadCategoriesResponse)
 	err := c.cc.Invoke(ctx, "/inventorysvc.InventoryService/ReadCategories", in, out, opts...)
 	if err != nil {
@@ -73,7 +73,7 @@ func (c *inventoryServiceClient) AddProduct(ctx context.Context, in *AddProductR
 	return out, nil
 }
 
-func (c *inventoryServiceClient) ReadProducts(ctx context.Context, in *Empty, opts ...grpc.CallOption) (*ReadProductsResponse, error) {
+func (c *inventoryServiceClient) ReadProducts(ctx context.Context, in *Request, opts ...grpc.CallOption) (*ReadProductsResponse, error) {
 	out := new(ReadProductsResponse)
 	err := c.cc.Invoke(ctx, "/inventorysvc.InventoryService/ReadProducts", in, out, opts...)
 	if err != nil {
@@ -87,10 +87,10 @@ func (c *inventoryServiceClient) ReadProducts(ctx context.Context, in *Empty, op
 // for forward compatibility
 type InventoryServiceServer interface {
 	CreateCategory(context.Context, *CreateCategoryRequest) (*CreateCategoryResponse, error)
-	ReadCategories(context.Context, *Empty) (*ReadCategoriesResponse, error)
+	ReadCategories(context.Context, *Request) (*ReadCategoriesResponse, error)
 	DeleteCategory(context.Context, *DeleteCategoryRequest) (*DeleteCategoryResponse, error)
 	AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error)
-	ReadProducts(context.Context, *Empty) (*ReadProductsResponse, error)
+	ReadProducts(context.Context, *Request) (*ReadProductsResponse, error)
 	mustEmbedUnimplementedInventoryServiceServer()
 }
 
@@ -101,7 +101,7 @@ type UnimplementedInventoryServiceServer struct {
 func (UnimplementedInventoryServiceServer) CreateCategory(context.Context, *CreateCategoryRequest) (*CreateCategoryResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method CreateCategory not implemented")
 }
-func (UnimplementedInventoryServiceServer) ReadCategories(context.Context, *Empty) (*ReadCategoriesResponse, error) {
+func (UnimplementedInventoryServiceServer) ReadCategories(context.Context, *Request) (*ReadCategoriesResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadCategories not implemented")
 }
 func (UnimplementedInventoryServiceServer) DeleteCategory(context.Context, *DeleteCategoryRequest) (*DeleteCategoryResponse, error) {
@@ -110,7 +110,7 @@ func (UnimplementedInventoryServiceServer) DeleteCategory(context.Context, *Dele
 func (UnimplementedInventoryServiceServer) AddProduct(context.Context, *AddProductRequest) (*AddProductResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddProduct not implemented")
 }
-func (UnimplementedInventoryServiceServer) ReadProducts(context.Context, *Empty) (*ReadProductsResponse, error) {
+func (UnimplementedInventoryServiceServer) ReadProducts(context.Context, *Request) (*ReadProductsResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method ReadProducts not implemented")
 }
 func (UnimplementedInventoryServiceServer) mustEmbedUnimplementedInventoryServiceServer() {}
@@ -145,7 +145,7 @@ func _InventoryService_CreateCategory_Handler(srv interface{}, ctx context.Conte
 }
 
 func _InventoryService_ReadCategories_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -157,7 +157,7 @@ func _InventoryService_ReadCategories_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/inventorysvc.InventoryService/ReadCategories",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).ReadCategories(ctx, req.(*Empty))
+		return srv.(InventoryServiceServer).ReadCategories(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -199,7 +199,7 @@ func _InventoryService_AddProduct_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _InventoryService_ReadProducts_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Empty)
+	in := new(Request)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func _InventoryService_ReadProducts_Handler(srv interface{}, ctx context.Context
 		FullMethod: "/inventorysvc.InventoryService/ReadProducts",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(InventoryServiceServer).ReadProducts(ctx, req.(*Empty))
+		return srv.(InventoryServiceServer).ReadProducts(ctx, req.(*Request))
 	}
 	return interceptor(ctx, in, info, handler)
 }
