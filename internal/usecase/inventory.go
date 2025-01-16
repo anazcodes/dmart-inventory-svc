@@ -45,7 +45,6 @@ func (i *inventoryUseCase) CreateCategory(ctx context.Context, req *pb.CreateCat
 	err = i.Repo.CreateCategory(ctx, models.Category{
 		Name: req.Name,
 	})
-
 	if util.HasError(err) {
 		return err
 	}
