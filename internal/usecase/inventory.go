@@ -54,14 +54,12 @@ func (i *inventoryUseCase) CreateCategory(ctx context.Context, req *pb.CreateCat
 }
 
 func (i *inventoryUseCase) ReadCategories(ctx context.Context, req *pb.Request) ([]*pb.Category, error) {
-
 	skip, limit := util.Paginate(req.Page, req.Count)
 
 	datas, err := i.Repo.ReadCategories(ctx, models.PageInfo{
 		Skip:  skip,
 		Limit: limit,
 	})
-
 	if util.HasError(err) {
 		if err != repo.ErrNoDocuments {
 			return nil, err
@@ -72,7 +70,6 @@ func (i *inventoryUseCase) ReadCategories(ctx context.Context, req *pb.Request) 
 }
 
 func (i *inventoryUseCase) AddProduct(ctx context.Context, req *pb.AddProductRequest) error {
-
 	category, err := i.Repo.GetCategoryByID(ctx, req.CategoryID)
 	util.Logger(category.ID, category.ID.Hex())
 
@@ -86,7 +83,6 @@ func (i *inventoryUseCase) AddProduct(ctx context.Context, req *pb.AddProductReq
 
 	product, err := i.Repo.GetProductByName(ctx, req.Name)
 	if util.HasError(err) {
-
 		if err != repo.ErrNoDocuments {
 			return err
 		}
@@ -115,7 +111,6 @@ func (i *inventoryUseCase) ReadProducts(ctx context.Context, req *pb.Request) ([
 		Skip:  skip,
 		Limit: limit,
 	})
-
 	if util.HasError(err) {
 		if err != repo.ErrNoDocuments {
 			return nil, err
