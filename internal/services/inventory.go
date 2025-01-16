@@ -16,11 +16,8 @@ type Server struct {
 }
 
 func (s *Server) CreateCategory(ctx context.Context, req *pb.CreateCategoryRequest) (*pb.CreateCategoryResponse, error) {
-
 	err := s.InventoryUseCase.CreateCategory(ctx, req)
-
 	if util.HasError(err) {
-
 		return &pb.CreateCategoryResponse{
 			Status: http.StatusNotAcceptable,
 			Msg:    "failed",
@@ -38,7 +35,6 @@ func (s *Server) CreateCategory(ctx context.Context, req *pb.CreateCategoryReque
 
 func (s *Server) ReadCategories(ctx context.Context, req *pb.Request) (*pb.ReadCategoriesResponse, error) {
 	datas, err := s.InventoryUseCase.ReadCategories(ctx, req)
-
 	if util.HasError(err) {
 		return &pb.ReadCategoriesResponse{
 			Status:     http.StatusInternalServerError,
@@ -57,7 +53,6 @@ func (s *Server) ReadCategories(ctx context.Context, req *pb.Request) (*pb.ReadC
 
 func (s *Server) AddProduct(ctx context.Context, req *pb.AddProductRequest) (*pb.AddProductResponse, error) {
 	err := s.InventoryUseCase.AddProduct(ctx, req)
-
 	if err == usecase.ErrRecordAlreadyExist {
 		return &pb.AddProductResponse{
 			Status: http.StatusConflict,
@@ -82,9 +77,7 @@ func (s *Server) AddProduct(ctx context.Context, req *pb.AddProductRequest) (*pb
 }
 
 func (s *Server) ReadProducts(ctx context.Context, req *pb.Request) (*pb.ReadProductsResponse, error) {
-
 	data, err := s.InventoryUseCase.ReadProducts(ctx, req)
-
 	if util.HasError(err) {
 		return &pb.ReadProductsResponse{
 			Status: http.StatusInternalServerError,
